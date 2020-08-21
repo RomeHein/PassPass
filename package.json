@@ -1,0 +1,44 @@
+{
+  "name": "passpass",
+  "version": "1.0.0",
+  "description": "A Telegram/Messenger Bot to assist PRM (Person with Reduced Mobility) in finding help in their neighborhood",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/RomeHein/PassPass.git"
+  },
+  "keywords": [
+    "Bot",
+    "PMR",
+    "PRM",
+    "Telegram",
+    "Messenger",
+    "Help",
+    "Neighborhood",
+    "pass"
+  ],
+  "author": "Romain Cayzac",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/RomeHein/PassPass/issues"
+  },
+  "homepage": "https://github.com/RomeHein/PassPass#readme",
+  "dependencies": {
+    "bot-brother": "^2.1.5",
+    "dotenv": "^6.1.0",
+    "express": "^4.16.4",
+    "path": "^0.12.7",
+    "pg-promise": "^8.5.0"
+  },
+  "devDependencies": {
+    "standard": "^12.0.1"
+  },
+  "standard": {
+    "globals": [
+      "Connector"
+    ]
+  }
+}
