@@ -11,6 +11,11 @@ module.exports = {
     findAll: sql('user/findAll.sql'),
     findById: sql('user/findById.sql'),
     findByTelegramId: sql('user/findByTelegramId.sql')
+  },
+  task: {
+    findAll: sql('task/findAll.sql'),
+    findById: sql('task/findById.sql'),
+    findByUser: sql('task/findByUser.sql'),
   }
 }
 
