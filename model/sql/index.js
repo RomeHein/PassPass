@@ -7,6 +7,9 @@ module.exports = {
   initDB: sql('init.sql'),
   checkDB: sql('check.sql'),
   migrate: (up, sqlFile) => sql(`migration/${up ? 'up' : 'down'}/${sqlFile}`),
+  migration: {
+    findAll: sql('migration/findAll.sql')
+  },
   user: {
     findAll: sql('user/findAll.sql'),
     findById: sql('user/findById.sql'),

@@ -17,13 +17,6 @@ CREATE TABLE if not exists "pool" (
     pool_qrcode TEXT
 );
 
-CREATE TABLE if not exists user_pool (
-    pool_id INTEGER REFERENCES pool (pool_id) ON DELETE CASCADE ON UPDATE CASCADE,
-    user_prm_id INTEGER REFERENCES user (user_id) ON DELETE CASCADE ON UPDATE CASCADE,
-    user_helper_id INTEGER REFERENCES user (user_id) ON DELETE CASCADE ON UPDATE CASCADE,
-    PRIMARY KEY(pool_id, user_helper_id)
-);
-
 CREATE TABLE if not exists "user" (
     user_id SERIAL PRIMARY KEY,
     user_prm_status INTEGER,
@@ -39,12 +32,6 @@ CREATE TABLE if not exists "user" (
     user_mail_address TEXT
 );
 
-CREATE TABLE if not exists user_task (
-    task_id INTEGER REFERENCES task (task_id) ON DELETE CASCADE,
-    user_id INTEGER REFERENCES user (user_id) ON DELETE CASCADE,
-    PRIMARY KEY(task_id,user_id)
-);
-
 CREATE TABLE if not exists task (
     task_id SERIAL PRIMARY KEY,
     task_type INTEGER,
@@ -58,7 +45,7 @@ CREATE TABLE if not exists task (
 
 CREATE TABLE if not exists schedule (
     task_id INTEGER REFERENCES task (task_id) ON DELETE CASCADE,
-    user_id INTEGER REFERENCES user (user_id) ON DELETE CASCADE,
+    user_id INTEGER REFERENCES "user" (user_id) ON DELETE CASCADE,
     schedule_days INTEGER[],
     schedule_start_hour TEXT,
     schedule_end_hour TEXT,
@@ -68,14 +55,27 @@ CREATE TABLE if not exists schedule (
 CREATE TABLE if not exists task_event (
     event_id SERIAL PRIMARY KEY,
     task_id INTEGER REFERENCES task (task_id) ON DELETE CASCADE,
-    user_prm_id INTEGER REFERENCES user (user_id) ON DELETE CASCADE,
-    user_helper_id INTEGER REFERENCES user (user_id) ON DELETE CASCADE,
+    user_prm_id INTEGER REFERENCES "user" (user_id) ON DELETE CASCADE,
+    user_helper_id INTEGER REFERENCES "user" (user_id) ON DELETE CASCADE,
     event_status INTEGER,
     -- 0: not picked up
     -- 1: picked up
     -- 2: done
     -- 3: canceled
     event_severity INTEGER
+);
+
+CREATE TABLE if not exists user_pool (
+    pool_id INTEGER REFERENCES pool (pool_id) ON DELETE CASCADE ON UPDATE CASCADE,
+    user_prm_id INTEGER REFERENCES "user" (user_id) ON DELETE CASCADE ON UPDATE CASCADE,
+    user_helper_id INTEGER REFERENCES "user" (user_id) ON DELETE CASCADE ON UPDATE CASCADE,
+    PRIMARY KEY(pool_id, user_helper_id)
+);
+
+CREATE TABLE if not exists user_task (
+    task_id INTEGER REFERENCES task (task_id) ON DELETE CASCADE,
+    user_id INTEGER REFERENCES "user" (user_id) ON DELETE CASCADE,
+    PRIMARY KEY(task_id,user_id)
 );
 
 -- Insert default status
