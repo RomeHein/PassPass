@@ -1,6 +1,9 @@
 const sql = require('./sql')
 const pgp = require('pg-promise')()
 const Helper = require('../Helper')
+const Task = require('./TaskModel')
+const Pool = require('./PoolModel')
+const { task } = require('./sql')
 
 /// Class project, handle db access
 module.exports = class User {
@@ -16,6 +19,7 @@ module.exports = class User {
       this.country = jsonObject.user_country
       this.city = jsonObject.user_city
       this.mailAddress = jsonObject.user_mail_address
+      this.tasks = jsonObject.user_tasks
     }
   }
 
@@ -46,6 +50,25 @@ module.exports = class User {
     }
   }
 
+  async addToPool(poolId) {
+    if (!poolId || !this.id) {
+      throw new Error('Main parameters not defined')
+    }
+    const pool = await Pool.findById(poolId)
+    // Pool exist
+    if (pool) {
+      // Now check if we 
+      const userPoolParams = {
+        user_id: this.id,
+        pool_id: poolId
+      }
+      const inserUserPool = pgp.helpers.insert(userPoolParams, Object.keys(userPoolParams), 'user_pool')
+      return Connector.db.tx(t => t.none(inserUserPool))
+    } else {
+      throw new Error('Pool does not exist')
+    }
+  }
+
   /// Return all users
   static async all (status) {
     const data = await Connector.db.tx(t => {
@@ -57,7 +80,7 @@ module.exports = class User {
     return User.parseArray(data)
   }
 
-  static async save ({ prmStatus, telegramId, telegramName, messengerId, messengerName, statusId, city, country, mailAddress }, returnObject) {
+  static async save ({ prmStatus, telegramId, telegramName, messengerId, messengerName, statusId, city, country, mailAddress, tasks }, returnObject) {
     if (!telegramId || !messengerId) {
       throw new Error('Main parameters not defined')
     }
@@ -75,9 +98,22 @@ module.exports = class User {
       user_mail_address: mailAddress
     }
     const insertUser = pgp.helpers.insert(params, Object.keys(params), 'user') + ' RETURNING *'
-
-    return Connector.db.tx(t => t.oneOrNone(insertUser))
-      .then(data => (returnObject && data ? new User(data) : null))
+    const data = await Connector.db.tx(t => {
+      let queries = [t.oneOrNone(insertUser)]
+      if (tasks) {
+        tasks.forEach=((task) => {
+          const userTaskParams = {
+            user_id: params.user_id,
+            task_id: task.id
+          }
+          queries.push(t.none(pgp.helpers.insert(userTaskParams, Object.keys(userTaskParams), 'user_task')))
+        })
+      }
+      return t.batch(queries)
+    })
+    if (returnObject && data) {
+      return new User(data)
+    }
   }
 
   update (returnObject) {
@@ -124,7 +160,46 @@ module.exports = class User {
     const columnSet = pgp.helpers.ColumnSet(params, { table: { table: 'user', schema: process.env.botSchema } })
     const updateInformations = pgp.helpers.update([updateBuilder], columnSet) + ` WHERE v.user_id = t.user_id RETURNING *`
 
-    return Connector.db.task(t => t.oneOrNone(updateInformations))
-      .then(data => (returnObject && data ? new User(data) : null))
+    const data = await Connector.db.task(t => t.oneOrNone(updateInformations))
+    if (returnObject && data) {
+      return new User(data)
+    }
+  }
+
+  async updateTasks() {
+    if (!this.id) {
+      return Promise.reject(new Error('Identifier parameter not defined'))
+    }
+    const dbTasks = await Task.findByUser(this.id)
+    const tasksToRemove = dbTasks.filter((dbTask) => {
+      for (task in this.tasks) {
+        if (task.id == dbTask.id) {
+          return false
+        }
+        return true
+      }
+    })
+    const tasksToAdd = this.tasks.filter((task) => {
+      for (dbTask in dbTasks) {
+        if (task.id == dbTask.id) {
+          return false
+        }
+      }
+      return true
+    })
+    return Connector.db.task(t => {
+      let queries = []
+      tasksToRemove.forEach((taskToRemove) => {
+        queries.push(t.none(sql.task.delete,taskToRemove.id,this.id))
+      })
+      tasksToAdd.forEach((taskToAdd) => {
+        const userTaskParams = {
+          user_id: this.id,
+          task_id: taskToAdd.id
+        }
+        queries.push(t.none(pgp.helpers.insert(userTaskParams, Object.keys(userTaskParams), 'user_task')))
+      })
+      return t.batch(queries)
+    })
   }
 }

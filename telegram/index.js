@@ -1,10 +1,10 @@
 const bb = require('bot-brother');
 const bot = bb({
   key: process.env.telegramToken,
-  sessionManager: bb.sessionManager.memory(),
+  sessionManager: bb.sessionManager.memory({dir: './storage'}),
   polling: { interval: 0, timeout: 1 }
 });
-const localization = require('../localization')
+const localization = require('../locales')
 
 // Setting keys and values for locale 'fr'.
 bot.texts(localization.fr, {locale: 'fr'})

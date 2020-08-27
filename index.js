@@ -19,7 +19,7 @@ const start = async (retried) => {
       console.log('✅ Telegram Bot loaded')
     }
   } catch (err) {
-    console.log(err.message)
+    console.error(err)
     if (err.code) {
       // Handle
       if (retried) {

@@ -12,13 +12,16 @@ CREATE TABLE if not exists user_status (
 );
 
 CREATE TABLE if not exists "pool" (
-    pool_id SERIAL PRIMARY KEY,
+    pool_id INTEGER PRIMARY KEY,
+    pool_owner_id INTEGER REFERENCES "user" (user_id) ON DELETE CASCADE,
     pool_label TEXT,
-    pool_qrcode TEXT
+    pool_qrcode TEXT,
+    pool_qrcode_label TEXT,
+    pool_qrcode_theme_id INTEGER
 );
 
 CREATE TABLE if not exists "user" (
-    user_id SERIAL PRIMARY KEY,
+    user_id INTEGER PRIMARY KEY,
     user_prm_status INTEGER,
     -- 0: helper
     -- 1: pmr
@@ -33,8 +36,10 @@ CREATE TABLE if not exists "user" (
 );
 
 CREATE TABLE if not exists task (
-    task_id SERIAL PRIMARY KEY,
+    task_id INTEGER PRIMARY KEY,
     task_type INTEGER,
+    -- 1: default task
+    -- 2: custom task
     task_label TEXT,
     task_default_severity INTEGER
     -- 0: normal 
@@ -53,7 +58,7 @@ CREATE TABLE if not exists schedule (
 );
 
 CREATE TABLE if not exists task_event (
-    event_id SERIAL PRIMARY KEY,
+    event_id INTEGER PRIMARY KEY,
     task_id INTEGER REFERENCES task (task_id) ON DELETE CASCADE,
     user_prm_id INTEGER REFERENCES "user" (user_id) ON DELETE CASCADE,
     user_helper_id INTEGER REFERENCES "user" (user_id) ON DELETE CASCADE,
@@ -67,8 +72,7 @@ CREATE TABLE if not exists task_event (
 
 CREATE TABLE if not exists user_pool (
     pool_id INTEGER REFERENCES pool (pool_id) ON DELETE CASCADE ON UPDATE CASCADE,
-    user_prm_id INTEGER REFERENCES "user" (user_id) ON DELETE CASCADE ON UPDATE CASCADE,
-    user_helper_id INTEGER REFERENCES "user" (user_id) ON DELETE CASCADE ON UPDATE CASCADE,
+    user_id INTEGER REFERENCES "user" (user_id) ON DELETE CASCADE ON UPDATE CASCADE,
     PRIMARY KEY(pool_id, user_helper_id)
 );
 
@@ -82,3 +86,9 @@ CREATE TABLE if not exists user_task (
 INSERT INTO user_status (status_id, status_label) VALUES (1, 'Available') ON CONFLICT (status_id) DO NOTHING;
 INSERT INTO user_status (status_id, status_label) VALUES (2, 'EmergencyOnly') ON CONFLICT (status_id) DO NOTHING;
 INSERT INTO user_status (status_id, status_label) VALUES (3, 'NotAvailable') ON CONFLICT (status_id) DO NOTHING;
+
+-- Insert default tasks
+INSERT INTO task (task_id, task_type, task_label,task_default_severity) VALUES (1, 1, 'openDoor',0) ON CONFLICT (task_id) DO NOTHING;
+INSERT INTO task (task_id, task_type, task_label,task_default_severity) VALUES (2, 1, 'grabStuff',0) ON CONFLICT (task_id) DO NOTHING;
+INSERT INTO task (task_id, task_type, task_label,task_default_severity) VALUES (3, 1, 'makeACourse',0) ON CONFLICT (task_id) DO NOTHING;
+INSERT INTO task (task_id, task_type, task_label,task_default_severity) VALUES (4, 1, 'emergency',1) ON CONFLICT (task_id) DO NOTHING;

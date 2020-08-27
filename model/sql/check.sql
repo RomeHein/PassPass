@@ -15,12 +15,12 @@ where table_name = 'migration' and (column_name = 'migration_name' OR column_nam
 IF (test != 2) THEN RETURN 21;
 END IF;
 select COUNT(*) from INFORMATION_SCHEMA.COLUMNS 
-where table_name = 'pool' and (column_name = 'pool_id' OR column_name = 'pool_label' OR column_name = 'pool_qrcode') into test;
-IF (test != 3) THEN RETURN 22;
+where table_name = 'pool' and (column_name = 'pool_id' OR column_name = 'pool_owner_id' OR column_name = 'pool_label' OR column_name = 'pool_qrcode' OR column_name = 'pool_qrcode_label' OR column_name = 'pool_qrcode_theme_id') into test;
+IF (test != 6) THEN RETURN 22;
 END IF;
 select COUNT(*) from INFORMATION_SCHEMA.COLUMNS 
-where table_name = 'user_pool' and (column_name = 'user_helper_id' OR column_name = 'pool_id' OR column_name = 'user_prm_id') into test;
-IF (test != 3) THEN RETURN 23;
+where table_name = 'user_pool' and (column_name = 'user_id' OR column_name = 'pool_id') into test;
+IF (test != 2) THEN RETURN 23;
 END IF;
 select COUNT(*) from INFORMATION_SCHEMA.COLUMNS 
 where table_name = 'user' and (column_name = 'user_id' OR column_name = 'user_prm_status' OR column_name = 'user_telegram_id' OR column_name = 'user_telegram_name' OR column_name = 'user_messenger_name' OR column_name = 'user_messenger_id' OR column_name = 'user_status_id' OR column_name = 'user_city' OR column_name = 'user_country' OR column_name = 'user_mail_address') into test;
@@ -50,6 +50,10 @@ SET search_path TO ${schema~};
 -- Check if basic user_status are present
 select COUNT(*) from user_status into test;
 IF (test != 3) THEN RETURN 31;
+END IF;
+-- Check if basic user_status are present
+select COUNT(*) from task into test;
+IF (test != 4) THEN RETURN 32;
 END IF;
 
 RETURN 0;
