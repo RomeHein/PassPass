@@ -15,8 +15,8 @@ where table_name = 'migration' and (column_name = 'migration_name' OR column_nam
 IF (test != 2) THEN RETURN 21;
 END IF;
 select COUNT(*) from INFORMATION_SCHEMA.COLUMNS 
-where table_name = 'pool' and (column_name = 'pool_id' OR column_name = 'pool_owner_id' OR column_name = 'pool_label' OR column_name = 'pool_qrcode' OR column_name = 'pool_qrcode_label' OR column_name = 'pool_qrcode_theme_id') into test;
-IF (test != 6) THEN RETURN 22;
+where table_name = 'pool' and (column_name = 'pool_id' OR column_name = 'pool_owner_id' OR column_name = 'pool_label' OR column_name = 'pool_qrcode_label' OR column_name = 'pool_qrcode_theme_id') into test;
+IF (test != 5) THEN RETURN 22;
 END IF;
 select COUNT(*) from INFORMATION_SCHEMA.COLUMNS 
 where table_name = 'user_pool' and (column_name = 'user_id' OR column_name = 'pool_id') into test;

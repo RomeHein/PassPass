@@ -19,7 +19,7 @@ module.exports = (bot) => {
     .answer(async (ctx) => {
         ctx.session.user.mailAddress = ctx.answer
         if (!ctx.session.user.id) {
-            return ctx.go('signInPrmAccount-3')
+            return ctx.go('setTasks')
         }
         await User.update(ctx.session.user)
         return ctx.sendMessage('address.done')

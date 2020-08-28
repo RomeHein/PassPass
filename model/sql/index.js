@@ -12,6 +12,7 @@ module.exports = {
   },
   user: {
     findAll: sql('user/findAll.sql'),
+    findAllByPrmUser: sql('user/findAllByPrmUser.sql'),
     findById: sql('user/findById.sql'),
     findByTelegramId: sql('user/findByTelegramId.sql')
   },
@@ -22,7 +23,11 @@ module.exports = {
     findByUser: sql('task/findByUser.sql'),
   },
   pool: {
-    findById: sql('pool/findById.sql')
+    findById: sql('pool/findById.sql'),
+    findByUser: sql('pool/findByUser.sql')
+  },
+  event: {
+    findByUser: sql('event/findByUser.sql')
   }
 }
 

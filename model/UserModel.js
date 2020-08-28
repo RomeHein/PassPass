@@ -50,6 +50,25 @@ module.exports = class User {
     }
   }
 
+  async followPrmUser(userId) {
+    if (!userId || !this.id) {
+      throw new Error('Main parameters not defined')
+    }
+    const pool = await Pool.findByUser(userId)
+    // Pool exist
+    if (pool) {
+      // Now check if we 
+      const userPoolParams = {
+        user_id: this.id,
+        pool_id: poolId
+      }
+      const inserUserPool = pgp.helpers.insert(userPoolParams, Object.keys(userPoolParams), 'user_pool')
+      return Connector.db.tx(t => t.none(inserUserPool))
+    } else {
+      throw new Error('Pool does not exist')
+    }
+  }
+
   async addToPool(poolId) {
     if (!poolId || !this.id) {
       throw new Error('Main parameters not defined')
@@ -80,15 +99,23 @@ module.exports = class User {
     return User.parseArray(data)
   }
 
-  static async save ({ prmStatus, telegramId, telegramName, messengerId, messengerName, statusId, city, country, mailAddress, tasks }, returnObject) {
-    if (!telegramId || !messengerId) {
+  static async allByPrmUser (prmUserId) {
+    if (!prmUserId) {
+      throw new Error('Main parameters not defined')
+    }
+    const data = await Connector.db.tx(t => t.manyOrNone(sql.user.findAllByPrmUser))
+    return User.parseArray(data)
+  }
+
+  static async save ({ prmStatus, telegramId, telegramName, messengerId, messengerName, status, city, country, mailAddress, tasks }, returnObject) {
+    if (!telegramId && !messengerId) {
       throw new Error('Main parameters not defined')
     }
 
     const params = {
       user_id: Helper.generateID(),
       user_prm_status: prmStatus || 0,
-      user_status_id: statusId,
+      user_status_id: status.id,
       user_telegram_id: telegramId,
       user_telegram_name: telegramName,
       user_messenger_id: messengerId,
@@ -97,11 +124,11 @@ module.exports = class User {
       user_city: city,
       user_mail_address: mailAddress
     }
-    const insertUser = pgp.helpers.insert(params, Object.keys(params), 'user') + ' RETURNING *'
+    const insertUser = `SET search_path TO ${process.env.dbSchema};` + pgp.helpers.insert(params, Object.keys(params), 'user') + ' RETURNING *;'
     const data = await Connector.db.tx(t => {
       let queries = [t.oneOrNone(insertUser)]
       if (tasks) {
-        tasks.forEach=((task) => {
+        tasks.forEach((task) => {
           const userTaskParams = {
             user_id: params.user_id,
             task_id: task.id
@@ -111,8 +138,8 @@ module.exports = class User {
       }
       return t.batch(queries)
     })
-    if (returnObject && data) {
-      return new User(data)
+    if (returnObject && data[0]) {
+      return new User(data[0])
     }
   }
 

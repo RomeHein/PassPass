@@ -38,7 +38,7 @@ module.exports = class Task {
     return Task.parseArray(data)
   }
 
-  /// Return all users
+  /// Return all tasks
   static async all (severity) {
     const data = await Connector.db.tx(t => {
       if (severity) {
@@ -62,8 +62,10 @@ module.exports = class Task {
     }
     const insertTask = pgp.helpers.insert(params, Object.keys(params), 'task') + ' RETURNING *'
 
-    return Connector.db.tx(t => t.oneOrNone(insertTask))
-      .then(data => (returnObject && data ? new Task(data) : null))
+    const data = await Connector.db.tx(t => t.oneOrNone(insertTask))
+    if (returnObject && data) {
+        return new Task(data)
+    }
   }
 
   update (returnObject) {
@@ -98,7 +100,9 @@ module.exports = class Task {
     const columnSet = pgp.helpers.ColumnSet(params, { table: { table: 'task', schema: process.env.botSchema } })
     const updateInformations = pgp.helpers.update([updateBuilder], columnSet) + ` WHERE v.task_id = t.task_id RETURNING *`
 
-    return Connector.db.task(t => t.oneOrNone(updateInformations))
-      .then(data => (returnObject && data ? new Task(data) : null))
+    const data = await Connector.db.task(t => t.oneOrNone(updateInformations))
+    if (returnObject && data) {
+        return new Task(data)
+    }
   }
 }
