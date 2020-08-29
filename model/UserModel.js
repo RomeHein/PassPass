@@ -143,6 +143,13 @@ module.exports = class User {
     }
   }
 
+  async remove() {
+    if (!id) {
+      throw new Error('Main parameters not defined')
+    }
+    return Connector.db.tx(t => t.none(sql.user.delete))
+  }
+
   update (returnObject) {
     return User.update(this, returnObject)
   }

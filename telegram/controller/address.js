@@ -1,5 +1,27 @@
 const User = require('../../model/UserModel')
 module.exports = (bot) => {
+
+    bot.command('address-confirm')
+    .use('beforeInvoke', async (ctx)=> {
+        const user = await User.findByTelegramId(ctx.meta.user.id)
+        if (user.country && user.city && user.mailAddress) {
+            ctx.data.user = user
+        } else {
+            return ctx.go(address-country)
+        }
+    })
+    .invoke((ctx) => {
+        if (ctx.data.user.country && ctx.data.user.city && ctx.data.user.mailAddress) {
+            return ctx.sendMessage('address.confirm')
+        }
+        await ctx.sendMessage('address.needAddress')
+        return ctx.go('address-country')
+    })
+    .keyboard([
+        [{ 'keyboard.address.confirm.true': {go: 'address-country'}}],
+        [{ 'keyboard.address.confirm.false': {go: 'address-country'}}]
+    ])
+
     bot.command('address-country')
     .invoke((ctx) => ctx.sendMessage('address.country'))
     .answer((ctx) => {

@@ -30,6 +30,9 @@ module.exports = (bot) => {
     bot.command('qrCodeGeneration-4')
     .invoke((ctx) => ctx.sendMessage('qrCode.done'))
 
+    bot.command('qrCodeGeneration-4-sent-to-mail')
+    .invoke((ctx) => ctx.sendMessage('qrCode.doneSentToMail'))
+
     bot.command('qrCode')
     .invoke(async (ctx) => {
         if (!ctx.session.user || !ctx.session.user.id) {

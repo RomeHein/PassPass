@@ -11,6 +11,7 @@ module.exports = {
     findAll: sql('migration/findAll.sql')
   },
   user: {
+    delete: sql('user/delete.sql'),
     findAll: sql('user/findAll.sql'),
     findAllByPrmUser: sql('user/findAllByPrmUser.sql'),
     findById: sql('user/findById.sql'),

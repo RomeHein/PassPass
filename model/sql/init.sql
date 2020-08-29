@@ -60,7 +60,7 @@ CREATE TABLE if not exists task_event (
     event_id BIGINT PRIMARY KEY,
     task_id BIGINT REFERENCES task (task_id) ON DELETE CASCADE,
     user_prm_id BIGINT REFERENCES "user" (user_id) ON DELETE CASCADE,
-    user_helper_id BIGINT REFERENCES "user" (user_id) ON DELETE CASCADE,
+    user_helper_id BIGINT REFERENCES "user" (user_id) ON DELETE SET DEFAULT ON UPDATE CASCADE,
     event_status INTEGER,
     -- 0: not picked up
     -- 1: picked up

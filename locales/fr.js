@@ -70,9 +70,15 @@ module.exports = {
         helpRequested: `J'ai envoyé une demande à toutes les personnes qui se sont inscrites pour vous aider. Je vous signalerai dès que quelqu'un accepte.`
     },
     address: {
+        needAddress: `Vous n'avez pas encore renseigné d'adresse.`,
+        confirm: `Confirmez-vous l'adresse suivante:
+        <%=user.mailAddress%>
+        <%=user.city%> <%=user.country%>`,
         country: `Dans quelle pays habitez vous?`,
         city: `Dans quelle ville habitez vous?`,
-        mail: `Quelle est votre adresse? Essayez d'être le plus complet possible ;)`,
+        mail: `Quelle est votre adresse? Essayez d'être le plus complet possible avec le format suivant: 
+        Civilité / Nom de Famille / Prenom
+        Adresse postale`,
         done: `Ok, j'ai enregistré votre nouvelle adresse.`
     },
     qrCode: {
@@ -82,6 +88,9 @@ module.exports = {
         textCustomisation: `Pour rendre votre sticker plus attractif je vous conseil d'y ajouter un petit texte personnalisé.
         Quel texte souhaitez-vous ajouter?`,
         notSignedIn: `Il me semble que vous êtes pas encore inscrit... Commencer par la commande /start et je vous guiderai pas à pas.`,
+        sendByMail: `Souhaitez-vous que je vous envoie directement chez vous votre sticker?`,
+        doneSentToMail: `Voilà! vous devriez recevoir votre sticker par la poste!
+        Bientôt vous aurez tout pour commencer! Pour voir comment je fonctionne, je vous invite à entrer la commande /help (ou appuyer directement sur ce liens)`,
         done: `Voilà! Vous avez tout pour commencer! Pour voir comment je fonctionne, je vous invite à entrer la commande /help (ou appuyer directement sur ce liens)`
     },
     keyboard: {
@@ -107,6 +116,12 @@ module.exports = {
                 false: `Non, ce n'est pas le cas`
             },
         },
+        address: {
+            confirm: {
+                true: `oui c'est correct`,
+                false: `non, ce n'est pas correct`
+            }
+        },
         confirmNewPrm: {
             ok: `Oui`,
             no: `Non`  
@@ -121,10 +136,23 @@ module.exports = {
             removeTask3: `retirer C`,
             removeTask4: `retirer D`,
             taskSelectionOver: `J'ai terminé!`,
+        },
+        quit: {
+            confirm: {
+                true: 'Oui, je souhaite supprimer mon compte de manière définitive',
+                true: 'Non!'
+            }
         }
     },
     notification: {
         prmHasNewHelper: (helperUser) => `${helperUser.telegramName} vient juste de s'inscrire pour vous aider! 
         Il essayera de se rendre disponible pour les taches suivantes: ${helperUser.tasks.map((task)=>task.id).join(',')}`
+    },
+    quit: {
+        confirm: `Etes-vous certain de vouloir quitter PassPass. En continuant, je supprimerai toutes vos informations de ma base de donnée. 
+        Je supprimerai égaelement tout les liens entre vous et vos aidants (je les préviendrai de votre départ).
+        On continue?`,
+        done: `C'est fait. C'était un plaisir de vous accueillir sur PassPass. Nous espérons vous revoir très bientôt (vous pouvez toujours vous réinscrire en m'envoyant la commande /start).`,
+        cancel: `C'est une bonne chose que vous restiez parmis nous!`
     }
   }
