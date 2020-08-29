@@ -1,0 +1,23 @@
+- name: Setup your raspberry as HomeIn1 
+  hosts: all
+  become: yes
+  roles:
+    - role: setup
+      tags: setup
+    - role: PassPass
+      tags: PassPass
+
+- hosts: all
+  become: yes
+  tasks:
+    - name: Reboot Raspberry Pi
+      shell: "sleep 5 && reboot now"
+      async: 1
+      poll: 0
+
+    - name: Congratulations!
+      debug:
+        msg: PassPass is set on your Raspberry Pi
+
+    
+      

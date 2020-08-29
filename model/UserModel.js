@@ -54,15 +54,15 @@ module.exports = class User {
     if (!userId || !this.id) {
       throw new Error('Main parameters not defined')
     }
-    const pool = await Pool.findByUser(userId)
+    const pool = (await Pool.findByUser(userId)).find((pool) => pool.ownerId === userId)
     // Pool exist
     if (pool) {
       // Now check if we 
       const userPoolParams = {
         user_id: this.id,
-        pool_id: poolId
+        pool_id: pool.id
       }
-      const inserUserPool = pgp.helpers.insert(userPoolParams, Object.keys(userPoolParams), 'user_pool')
+      const inserUserPool = `SET search_path TO ${process.env.dbSchema};` + pgp.helpers.insert(userPoolParams, Object.keys(userPoolParams), 'user_pool')
       return Connector.db.tx(t => t.none(inserUserPool))
     } else {
       throw new Error('Pool does not exist')

@@ -1,0 +1,18 @@
+---
+- name: Get updated files from git repository 
+  git: 
+    repo: "https://github.com/RomeHein/PassPass.git"
+    dest: /opt/PassPass
+
+- name: build the image
+  command: docker build -t passpass /opt/PassPass
+
+- name: Template docker-compose.yml
+  template:
+    src: docker-compose.yml.j2
+    dest: /opt/PassPass/docker-compose.yml
+
+- name: Start up PassPass
+  command: docker-compose up -d
+  args:
+    chdir: /opt/PassPass

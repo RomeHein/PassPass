@@ -65,7 +65,9 @@ module.exports = {
         grabStuff: `récupérer un objet tombé`,
         makeACourse: `faire de manière exceptionnelle une course`,
         emergency: `être rapidement présent en cas de problème avant l’intervention des soignants ou des secours`,
-        updated: `C'est bon, j'ai sauvegardé vos nouvelles préférences.`
+        updated: `C'est bon, j'ai sauvegardé vos nouvelles préférences.`,
+        requestHelp: `Quelle aide souhaitez-vous?`,
+        helpRequested: `J'ai envoyé une demande à toutes les personnes qui se sont inscrites pour vous aider. Je vous signalerai dès que quelqu'un accepte.`
     },
     address: {
         country: `Dans quelle pays habitez vous?`,

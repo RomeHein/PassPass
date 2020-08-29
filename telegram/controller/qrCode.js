@@ -13,7 +13,7 @@ module.exports = (bot) => {
     })
 
     bot.command('qrCodeGeneration-2')
-    .use('beforeInvoke', async (ctx) => {
+    .use('before', async (ctx) => {
         ctx.session.pool = await Pool.save(ctx.session.pool)
         await QRCode.toFile(`./storage/tempQRCode-${ctx.session.user.id}.png`,`https://t.me/passpassbot?start=${ctx.session.user.id}`)
         return ctx.sendPhoto(`./storage/tempQRCode-${ctx.session.user.id}.png`)
@@ -21,6 +21,13 @@ module.exports = (bot) => {
     .invoke((ctx) => ctx.go('qrCodeGeneration-3'))
 
     bot.command('qrCodeGeneration-3')
+    .invoke((ctx) => ctx.sendMessage('qrCode.sendByMail'))
+    .keyboard([
+        [{ 'keyboard.qrcode.sendByMail.true': {go: 'address-confirm'}}],
+        [{ 'keyboard.qrcode.sendByMail.false': {go: 'qrCodeGeneration-4'}}]
+    ])
+    
+    bot.command('qrCodeGeneration-4')
     .invoke((ctx) => ctx.sendMessage('qrCode.done'))
 
     bot.command('qrCode')

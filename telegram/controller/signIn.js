@@ -23,7 +23,7 @@ module.exports = (bot) => {
     .use('before', (ctx) => ctx.sendMessage('signIn.accountCreation'))
     .use('beforeInvoke', async (ctx) => {
         // First format task object before sending to db
-        ctx.session.user.tasks = ctx.session.tasks.map((taskId => {return {id: taskId}}))
+        ctx.session.user.tasks = ctx.session.user.tasks.map((taskId => {return {id: taskId}}))
         ctx.session.user.status = {id:1}
         ctx.session.user = await User.save(ctx.session.user, true)
         return ctx.sendMessage('signIn.prmAccountCreationDone')
@@ -44,7 +44,7 @@ module.exports = (bot) => {
     .use('before', (ctx) => ctx.sendMessage('signIn.accountCreation'))
     .invoke(async (ctx) =>{
         ctx.data.scannedUser = ctx.session.scannedUser
-        ctx.session.user.tasks = ctx.session.tasks.map((taskId => {return {id: taskId}}))
+        ctx.session.user.tasks = ctx.session.user.tasks.map((taskId => {return {id: taskId}}))
         ctx.session.user.status = {id:1}
         ctx.session.user = await User.save(ctx.session.user, true)
         await ctx.session.user.followPrmUser(ctx.session.scannedUser.id)

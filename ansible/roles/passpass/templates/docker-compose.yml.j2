@@ -1,0 +1,39 @@
+version: "3"
+services:
+  app:
+    image: passpass
+    restart: always
+    privileged: true
+    user: root
+    depends_on:
+      - postgres
+    environment:
+      db: {{db_name}} 
+      dbSchema: {{db_schema}} 
+      dbUser: {{db_user}}
+      dbUserPassword: {{db_password}}
+      dbHost: postgres
+      dbPort: 5432
+      telegramToken: {{telegram_token}}
+      autoMigrate: true
+      TZ: {{process_timezone}}
+    ports:
+      - "{{api_port}}:{{api_port}}"
+    volumes:
+      - /sys:/sys
+      - /dev/mem:/dev/mem
+
+  postgres:
+    image: postgres:alpine
+    restart: always
+    ports:
+      - "35432:5432"
+    volumes:
+      - db:/var/lib/postgresql/data
+    environment:
+      POSTGRES_USER: {{db_user}}
+      POSTGRES_PASSWORD: {{db_password}}
+      POSTGRES_DB: {{db_name}}
+      POSTGRES_SCHEMA: {{db_schema}}
+volumes:
+  db:

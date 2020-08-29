@@ -15,7 +15,7 @@ module.exports = (bot) => {
                         ctx.session.user.prmStatus = 0
                     }
                     const scannedUser = await User.findById(ctx.args[0])
-                    if (scannedUser) {
+                    if (!scannedUser) {
                         throw new Error()
                     }
                     ctx.session.scannedUser = scannedUser
@@ -67,7 +67,7 @@ module.exports = (bot) => {
     ]);
 
     bot.command('moreInfoHelper')
-    .use('before', (ctx) => ctx.sendMessage('introduction.disclaimer'))
+    .use('before', (ctx) => ctx.sendMessage('introduction.disclaimer.helper'))
     .use('beforeInvoke', async (ctx) => {
         ctx.data.scannedUser = ctx.session.scannedUser
         await ctx.sendMessage('introduction.samples')

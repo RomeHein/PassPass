@@ -11,7 +11,7 @@ SELECT
     u.user_mail_address,
     (SELECT jsonb_build_object('id',s.status_id, 'label', s.status_label)
         FROM user_status s WHERE u.user_status_id = s.status_id) as user_status,
-    (SELECT jsonb_build_object('id',t.task_id,'type', t.task_type, 'label', t.task_label, 'defaultSeverity', t.task_default_severity)
+    (SELECT jsonb_agg(jsonb_build_object('id',t.task_id,'type', t.task_type, 'label', t.task_label, 'defaultSeverity', t.task_default_severity))
         FROM task t INNER JOIN user_task ut ON ut.task_id = t.task_id WHERE ut.user_id = u.user_id) as user_tasks
 FROM "user" u
 WHERE u.user_id = $1;

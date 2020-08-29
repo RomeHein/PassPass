@@ -1,0 +1,8 @@
+---
+db_user: ppuser
+db_name: production
+db_password: PassPassIsAnOpenSourceProject4Prm
+db_schema: passpass
+telegram_token: test:AAGtestA
+debug_container: 0
+process_timezone: Europe/Amsterdam

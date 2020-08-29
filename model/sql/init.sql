@@ -16,8 +16,8 @@ CREATE TABLE if not exists "user" (
     user_prm_status INTEGER,
     -- 0: helper
     -- 1: pmr
-    user_telegram_id BIGINT,
-    user_messenger_id BIGINT,
+    user_telegram_id BIGINT UNIQUE,
+    user_messenger_id BIGINT UNIQUE,
     user_telegram_name TEXT,
     user_messenger_name TEXT,
     user_status_id INTEGER REFERENCES user_status (status_id) ON DELETE SET DEFAULT ON UPDATE CASCADE,

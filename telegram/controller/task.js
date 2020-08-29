@@ -28,7 +28,7 @@ module.exports = (bot) => {
         if (ctx.answer > 0) {
             ctx.session.user.tasks.push(ctx.answer)
         } else {
-            ctx.session.user.tasks = ctx.session.user.tasks.filter((taskId) => -actx.nswer !== taskId)
+            ctx.session.user.tasks = ctx.session.user.tasks.filter((taskId) => -ctx.answer !== taskId)
         }
         ctx.data.selectedTasksString = ctx.session.user.tasks.reduce((previous, taskId) => {
             if (previous) {
@@ -53,7 +53,7 @@ module.exports = (bot) => {
         // If we don't have an id, it means we are still in the signIn process
         if (!ctx.session.user.id) {
             if (ctx.session.user.prmStatus === 0) {
-                return ctx.sendMessage('signInHelperAccount-2')
+                return ctx.go('signInHelperAccount-2')
             }
             return ctx.go('signInPrmAccount-3')
         }
@@ -64,8 +64,20 @@ module.exports = (bot) => {
         return ctx.sendMessage('task.updated')
     })
 
-    // bot.command('tasks')
-    // .invoke(async (ctx) => {
-
-    // })
+    bot.command('tasks')
+    .use('beforeInvoke', async (ctx) => {
+        const user = await User.findByTelegramId(ctx.meta.user.id)
+        ctx.session.user = user
+        ctx.keyboard(user.tasks.map((task) => {
+            const button = {}
+            button[task.label] = task.id
+            return [button]
+        }));
+    })
+    .invoke((ctx) => ctx.sendMessage('task.requestHelp'))
+    .answer(async (ctx) => {
+        const selectedTask = ctx.session.user.tasks.find((task)=>+task.id===+ctx.answer)
+        await TelegramNotifier.prmRequestHelp(ctx.session.user, selectedTask)
+        return ctx.sendMessage('task.helpRequested')
+    })
 }
