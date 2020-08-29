@@ -10,7 +10,7 @@ module.exports = (bot) => {
             return ctx.go(address-country)
         }
     })
-    .invoke((ctx) => {
+    .invoke(async (ctx) => {
         if (ctx.data.user.country && ctx.data.user.city && ctx.data.user.mailAddress) {
             return ctx.sendMessage('address.confirm')
         }
@@ -18,7 +18,7 @@ module.exports = (bot) => {
         return ctx.go('address-country')
     })
     .keyboard([
-        [{ 'keyboard.address.confirm.true': {go: 'address-country'}}],
+        [{ 'keyboard.address.confirm.true': {go: 'qrCodeGeneration-4-sent-to-mail'}}],
         [{ 'keyboard.address.confirm.false': {go: 'address-country'}}]
     ])
 

@@ -11,14 +11,14 @@ module.exports = {
     findAll: sql('migration/findAll.sql')
   },
   user: {
-    delete: sql('user/delete.sql'),
+    delete: sql('user/deleteById.sql'),
     findAll: sql('user/findAll.sql'),
     findAllByPrmUser: sql('user/findAllByPrmUser.sql'),
     findById: sql('user/findById.sql'),
     findByTelegramId: sql('user/findByTelegramId.sql')
   },
   task: {
-    delete: sql('task/delete.sql'),
+    deleteUserTask: sql('task/deleteUserTask.sql'),
     findAll: sql('task/findAll.sql'),
     findById: sql('task/findById.sql'),
     findByUser: sql('task/findByUser.sql'),
@@ -28,6 +28,7 @@ module.exports = {
     findByUser: sql('pool/findByUser.sql')
   },
   event: {
+    findByUserAndStatus: sql('event/findUntakenByUser.sql'),
     findByUser: sql('event/findByUser.sql')
   }
 }

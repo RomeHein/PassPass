@@ -7,7 +7,7 @@ module.exports = (bot) => {
         [{ 'keyboard.quit.confirm.true': 1}],
         [{ 'keyboard.quit.confirm.false': 0}]
     ])
-    .answer((ctx) => {
+    .answer(async (ctx) => {
         if (ctx.answer) {
             const user = await User.findByTelegramId(ctx.meta.user.id)
             await user.remove()

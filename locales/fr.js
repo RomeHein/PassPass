@@ -28,9 +28,9 @@ module.exports = {
       addNewPrm: `Vous avez eu la bonne idée de flasher un QR code PassPass de <%=scannedUser.telegramName%>. Je vois que vous connaissez déjà le principe de PassPass. Je vais donc utiliser les préférences que vous avez déjà paramétrées.`,
     },
     signIn: {
-        neighborDensity: `Avant de commencer, PassPass se base fortement sur l'entreaide. Pour faciliter cela, il est nécessaire que vous vous trouviez au moins dans une ville ou village avec beaucoup de voisins à proximité directe de votre habitation.`,
+        neighborDensity: `PassPass se base fortement sur l'entreaide. Pour faciliter cela, il est nécessaire que vous vous trouviez au moins dans une ville ou village avec beaucoup de voisins à proximité directe de votre habitation.`,
         notDenseNeighborhood: `Je suis navré, mais PassPass fonctionne mieux avec une grande densité de personne autour de vous. Nous pouvons toujours continuer le processus, mais je ne suis pas certain de pouvoir être une grande aide!`,
-        mailAddress: `A présent j'aurais besoin de votre address physique. Cela pour deux raisons: 
+        mailAddress: `A présent j'aurais besoin de votre adresse physique. Cela pour deux raisons: 
         - Lorsque quelqu'un scannera votre QRCode je serait en mesure de savoir si il n'est pas trop loin de chez vous
         - Si vous souhaitez que je vous imprime votre sticker personnalisé avec votre QRCode, je pourrais l'envoyer directement chez vous
         Il vous ait tout à fait possible de passer cette question ou de supprimer vos données plustard.
@@ -136,6 +136,12 @@ module.exports = {
             removeTask3: `retirer C`,
             removeTask4: `retirer D`,
             taskSelectionOver: `J'ai terminé!`,
+        },
+        qrcode: {
+            sendByMail: {
+                true: 'Oui',
+                false: 'Non'
+            }
         },
         quit: {
             confirm: {

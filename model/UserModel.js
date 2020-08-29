@@ -103,7 +103,7 @@ module.exports = class User {
     if (!prmUserId) {
       throw new Error('Main parameters not defined')
     }
-    const data = await Connector.db.tx(t => t.manyOrNone(sql.user.findAllByPrmUser))
+    const data = await Connector.db.tx(t => t.manyOrNone(sql.user.findAllByPrmUser,prmUserId))
     return User.parseArray(data)
   }
 
@@ -224,7 +224,7 @@ module.exports = class User {
     return Connector.db.task(t => {
       let queries = []
       tasksToRemove.forEach((taskToRemove) => {
-        queries.push(t.none(sql.task.delete,taskToRemove.id,this.id))
+        queries.push(t.none(sql.task.deleteUserTask,taskToRemove.id,this.id))
       })
       tasksToAdd.forEach((taskToAdd) => {
         const userTaskParams = {

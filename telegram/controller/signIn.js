@@ -1,8 +1,5 @@
 const User = require('../../model/UserModel')
 module.exports = (bot) => {
-
-    const Notifier = new (require('../Notifier'))(bot)
-
     bot.command('notDenseNeighborhood')
     .use('before', (ctx) => ctx.sendMessage('signIn.notDenseNeighborhood'))
     .invoke((ctx) => ctx.go('signInPrmAccount-2'))

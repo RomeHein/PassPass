@@ -70,7 +70,7 @@ module.exports = (bot) => {
         ctx.session.user = user
         ctx.keyboard(user.tasks.map((task) => {
             const button = {}
-            button[task.label] = task.id
+            button[task.label] = {value: task.id}
             return [button]
         }));
     })

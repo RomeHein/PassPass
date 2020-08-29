@@ -22,11 +22,14 @@ module.exports = class Event {
     return []
   }
 
-  static async findByUser (id) {
+  static async findByUser (id,untaken) {
     if (!id) {
       throw new Error('Main parameters not defined')
     }
-    return Connector.db.tx(t => t.oneOrNone(sql.task.findByUser, id))
+    if (untaken) {
+        return Connector.db.tx(t => t.oneOrNone(sql.event.findUntakenByUser,id))
+    }
+    return Connector.db.tx(t => t.oneOrNone(sql.event.findByUser, id))
   }
 
   static async save ({ task, prmUser, severity}, returnObject) {

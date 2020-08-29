@@ -17,11 +17,13 @@ bot.use('before', (ctx) => {
 })
 
 // Set Telegram Notifier as global, so that we can access telegram API everywhere
-const Notifier = require('./Notifier');
-global.TelegramNotifier = new Notifier(bot)
+const Notificator = require('./Notificator');
+global.TelegramNotifier = new Notificator(bot)
+require('./controller/task')(bot)
 
 require('./controller/start')(bot)
 require('./controller/signIn')(bot)
 require('./controller/address')(bot)
 require('./controller/qrCode')(bot)
-require('./controller/task')(bot)
+require('./CallbackHandler')(bot)
+require('./controller/quit')(bot)
