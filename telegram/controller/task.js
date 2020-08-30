@@ -2,19 +2,24 @@ const User = require('../../model/UserModel')
 module.exports = (bot) => {
     bot.command('setTasks')
     .invoke(async (ctx) => { 
-        if (!ctx.session.user) {
+        if (!ctx.hasRepeat) {
             ctx.session.user = await User.findByTelegramId(ctx.meta.user.id)
             if (!ctx.session.user) {
                 return ctx.go('notSignedIn')
             }
-        }
-        if (!ctx.session.user.tasks || ctx.session.user.tasks.constructor !== Array) {
-            ctx.session.user.tasks = []
-            if (ctx.session.user.prmStatus === 0) {
-                return ctx.sendMessage('task.taskListHelper')
+            if (!ctx.session.user.tasks || ctx.session.user.tasks.constructor !== Array) {
+                ctx.session.user.tasks = []
+                if (ctx.session.user.prmStatus === 0) {
+                    return ctx.sendMessage('task.taskListHelper')
+                }
+                return ctx.sendMessage('task.taskListPrm')
+            } else if (ctx.session.user.tasks && !ctx.session.user.tasks.length) {
+                return ctx.sendMessage('task.noSelectedTasks')
             }
-            return ctx.sendMessage('task.taskListPrm')
-        } else if (ctx.session.user.tasks && !ctx.session.user.tasks.length) {
+            ctx.session.user.tasks = ctx.session.user.tasks.map((task)=>task.id)
+            ctx.data.selectedTasksString = tasksToString(ctx.session.user.tasks)
+        }
+        if (ctx.session.user.tasks && !ctx.session.user.tasks.length) {
             return ctx.sendMessage('task.noSelectedTasks')
         }
         return ctx.sendMessage('task.selectedTasks')
@@ -36,23 +41,28 @@ module.exports = (bot) => {
         } else {
             ctx.session.user.tasks = ctx.session.user.tasks.filter((taskId) => -ctx.answer !== taskId)
         }
-        ctx.data.selectedTasksString = ctx.session.user.tasks.reduce((previous, taskId) => {
+        ctx.data.selectedTasksString = tasksToString(ctx.session.user.tasks)
+        ctx.hasRepeat = 1
+        return ctx.repeat();
+    })
+
+    const tasksToString = (tasks) => {
+        return tasks.reduce((previous, task) => {
             if (previous) {
                 previous += ', '
             }
-            if (taskId ===1) {
+            if (task === 1 || task.id === 1) {
                 previous += 'A'
-            } else if (taskId === 2) {
+            } else if (task === 2 || task.id === 2) {
                 previous += 'B'
-            } else if (taskId === 3) {
+            } else if (task === 3 || task.id === 3) {
                 previous += 'C'
-            } else if (taskId === 4) {
+            } else if (task === 4 || task.id === 4) {
                 previous += 'D'
             }
             return previous
         },'')
-        return ctx.repeat();
-    })
+    }
 
     bot.command('taskNext')
     .invoke(async (ctx) =>{

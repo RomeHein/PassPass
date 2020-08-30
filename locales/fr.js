@@ -23,7 +23,7 @@ module.exports = {
       termsAndConditionsDenied: `Je comprends, je vous invite à nous poser toutes questions ou intérogations que vous pouvez avoir à ce sujet. Je me chargerai de les remonter aux bonnes personnes ;)`,
       qrcodeNonAvailable: `🧐 Je suis désolé mais il semblerait que le Qrcode que vous venez de scanner n'appartient plus à personne :/ Il se peut que son ancien propriètaire ait déménagé ou se soit désinscrit de PassPass...`,
       notAPrm: `Ok, je pense que tu vois maintenant ce que je peux faire, alors n'hésite pas à en parler à des personnes qui pourraient en avoir besoin! N'oublie pas, ce service est gratuit, son code est opensource (disponible ici: https://github.com/RomeHein/PassPass) et il respecte les données personnelles de ses utilisateurs.`,
-      alreadySignedIn: `🧐 Mais je vous connez vous! Oui vous êtes <%=user.telegramName%> ;)`,
+      alreadySignedIn: `🧐 Mais je vous connais vous! Oui vous êtes <%=user.telegramName%> ;)`,
       prmHelper: `Pour le moment je limite l'entraide entre personne à mobilité réduite et personne mobile.`,
       addNewPrm: `🤩 Vous avez eu la bonne idée de flasher un QR code PassPass de <%=scannedUser.telegramName%>. Je vois que vous connaissez déjà le principe de PassPass. Je vais donc utiliser les préférences que vous avez déjà paramétrées.`,
     },

@@ -1,6 +1,9 @@
 
 
-# Bot Commands
+
+
+
+## Bot Commands
 
 tasks - Get your task list. From here you can trigger an alert to your helpers
 settasks - Set your tasks

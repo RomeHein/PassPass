@@ -6,8 +6,8 @@ module.exports = (bot) => {
     bot.command('info')
     .use((ctx)=>ctx.sendMessage('info'))
     .invoke(async (ctx) => {
-        const user = User.findByTelegramId(ctx.meta.user.id)
-        return ctx.sendMessage(JSON.stringify(user))
+        const user = await User.findByTelegramId(ctx.meta.user.id)
+        return ctx.sendMessage(JSON.stringify(user, null, 2))
     })
 
 }
