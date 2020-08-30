@@ -1,7 +1,11 @@
 
+<div>
+    <img src="storage/images/logo-large.png" width="400">
+</div>
 
+## What Do I do?
 
-
+I'm a Telegram/Messenger Bot to assist PRM (Person with Reduced Mobility) in finding help in their neighborhood.
 
 ## Bot Commands
 
@@ -20,5 +24,5 @@ help- get all commands available
 First, you'll need Ansible installed on your computer. Then clone this repo on your machine, and simply cd to the ansible directory of the project:
 ```cd /ansible```
 Then all you have to do is run the following command in your terminal:
-```ANSIBLE_HOST_KEY_CHECKING=false ansible-playbook passpass.yml -i raspberrypi.local, --user=pi --ask-pass -e "telegramToken=AAA:yourtelegramtoken"```
+```ANSIBLE_HOST_KEY_CHECKING=false ansible-playbook passpass.yml -i raspberrypi.local, --user=pi --ask-pass -e "telegram_token=AAA:yourtelegramtoken"```
 This command will install all the necessary tools on your raspberry pi.
