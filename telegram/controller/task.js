@@ -3,9 +3,11 @@ module.exports = (bot) => {
     bot.command('setTasks')
     .invoke(async (ctx) => { 
         if (!ctx.hasRepeat) {
-            ctx.session.user = await User.findByTelegramId(ctx.meta.user.id)
             if (!ctx.session.user) {
-                return ctx.go('notSignedIn')
+                ctx.session.user = await User.findByTelegramId(ctx.meta.user.id)
+                if (!ctx.session.user) {
+                    return ctx.go('notSignedIn')
+                }
             }
             if (!ctx.session.user.tasks || ctx.session.user.tasks.constructor !== Array) {
                 ctx.session.user.tasks = []
