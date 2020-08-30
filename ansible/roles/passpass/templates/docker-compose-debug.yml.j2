@@ -15,10 +15,9 @@ services:
       dbHost: postgres
       dbPort: 5432
       telegramToken: {{telegram_token}}
-      autoMigrate: true
+      autoMigrate: 1
       TZ: {{process_timezone}}
     ports:
-      - "{{api_port}}:{{api_port}}"
       - "9229:9229"
     volumes:
       - /sys:/sys
