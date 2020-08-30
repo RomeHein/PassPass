@@ -7,7 +7,7 @@ module.exports = (bot) => {
         if (user.country && user.city && user.mailAddress) {
             ctx.data.user = user
         } else {
-            return ctx.go(address-country)
+            return ctx.go('address-country')
         }
     })
     .invoke(async (ctx) => {

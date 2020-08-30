@@ -41,9 +41,11 @@ module.exports = (bot) => {
     .use('before', (ctx) => ctx.sendMessage('signIn.accountCreation'))
     .invoke(async (ctx) =>{
         ctx.data.scannedUser = ctx.session.scannedUser
-        ctx.session.user.tasks = ctx.session.user.tasks.map((taskId => {return {id: taskId}}))
+        const taskListObject = ctx.session.user.tasks.map((taskId => {return {id: taskId}}))
+        ctx.session.user.tasks = taskListObject
         ctx.session.user.status = {id:1}
         ctx.session.user = await User.save(ctx.session.user, true)
+        ctx.session.user.tasks = taskListObject
         await ctx.session.user.followPrmUser(ctx.session.scannedUser.id)
         await TelegramNotifier.prmHasNewHelper(ctx.data.scannedUser,ctx.session.user)
         return ctx.sendMessage('signIn.helperAccountCreationDone')

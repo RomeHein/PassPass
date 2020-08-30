@@ -4,8 +4,8 @@ module.exports = (bot) => {
     bot.command('quit')
     .invoke((ctx) => ctx.sendMessage('quit.confirm'))
     .keyboard([
-        [{ 'keyboard.quit.confirm.true': 1}],
-        [{ 'keyboard.quit.confirm.false': 0}]
+        [{ 'keyboard.quit.confirm.true': {value: 1}}],
+        [{ 'keyboard.quit.confirm.false': {value: 0}}]
     ])
     .answer(async (ctx) => {
         if (ctx.answer) {

@@ -39,7 +39,7 @@ module.exports = (bot) => {
             ctx.session.user = await User.findByTelegramId(ctx.meta.user.id)
         }
         if (!ctx.session.user || !ctx.session.user.id) {
-            return ctx.sendMessage('qrCode.notSignedIn')
+            return ctx.sendMessage('notSignedIn')
         }
         await QRCode.toFile(`./storage/tempQRCode-${ctx.session.user.id}.png`,`https://t.me/passpassbot?start=${ctx.session.user.id}`)
         return ctx.sendPhoto(`./storage/tempQRCode-${ctx.session.user.id}.png`)

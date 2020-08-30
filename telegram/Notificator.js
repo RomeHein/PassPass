@@ -1,5 +1,6 @@
 const User = require('../model/UserModel')
 const Event = require('../model/EventModel')
+const Locales = require('../locales')
 
 let instance = null
 
@@ -13,10 +14,10 @@ module.exports = class Notificator {
     }
 
     // Notify a prm user he has new helper in his pool
-    async prmHasNewHelper (prmUser, helperUser) {
+    async prmHasNewHelper (locale, prmUser, helperUser) {
         if (prmUser.telegramId) {
-            this.api.sendMessage(prmUser.telegramId, `${helperUser.telegramName} vient juste de s'inscrire pour vous aider! 
-            Il essayera de se rendre disponible pour les tâches suivantes: ${helperUser.tasks.map((task)=>task.id).join(',')}`)
+            const taskList = helperUser.tasks.map((task)=>Locales[locale].task[task.label]).join('/n')
+            this.api.sendMessage(prmUser.telegramId, helperUser.telegramName+ " vient juste de s'inscrire pour vous aider!/nIl essayera de se rendre disponible pour les tâches suivantes:/n" +taskList)
         }
     }
 

@@ -1,7 +1,13 @@
 const User = require('../../model/UserModel')
 module.exports = (bot) => {
     bot.command('setTasks')
-    .invoke((ctx) => { 
+    .invoke(async (ctx) => { 
+        if (!ctx.session.user) {
+            ctx.session.user = await User.findByTelegramId(ctx.meta.user.id)
+            if (!ctx.session.user) {
+                return ctx.go('notSignedIn')
+            }
+        }
         if (!ctx.session.user.tasks || ctx.session.user.tasks.constructor !== Array) {
             ctx.session.user.tasks = []
             if (ctx.session.user.prmStatus === 0) {
@@ -70,7 +76,7 @@ module.exports = (bot) => {
         ctx.session.user = user
         ctx.keyboard(user.tasks.map((task) => {
             const button = {}
-            button[task.label] = {value: task.id}
+            button[`task.${task.label}`] = {value: task.id}
             return [button]
         }));
     })

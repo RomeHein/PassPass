@@ -72,7 +72,7 @@ module.exports = (bot) => {
         ctx.data.scannedUser = ctx.session.scannedUser
         await ctx.sendMessage('introduction.samples')
         await ctx.sendMessage('task.selectedTasksByPrmSignIn')
-        await Promise.all(ctx.data.scannedUser.tasks.map((task)=>ctx.sendMessage(task.label)))
+        await Promise.all(ctx.data.scannedUser.tasks.map((task)=>ctx.sendMessage(`task.${task.label}`)))
     })
     .invoke((ctx) => ctx.go('termsAndConditionsHelper'));
    

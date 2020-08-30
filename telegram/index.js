@@ -16,6 +16,9 @@ bot.use('before', (ctx) => {
   ctx.setLocale(ctx.session.locale);
 })
 
+bot.command('notSignedIn')
+.invoke((ctx) => ctx.sendMessage('notSignedIn'))
+
 // Set Telegram Notifier as global, so that we can access telegram API everywhere
 const Notificator = require('./Notificator');
 global.TelegramNotifier = new Notificator(bot)
@@ -27,3 +30,4 @@ require('./controller/address')(bot)
 require('./controller/qrCode')(bot)
 require('./CallbackHandler')(bot)
 require('./controller/quit')(bot)
+require('./controller/help')(bot)
