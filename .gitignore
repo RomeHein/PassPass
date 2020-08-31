@@ -1,7 +1,6 @@
 .DS_Store
 node_modules
 .env
-docker-compose.yml
 .vscode
 storage/*
 !storage/images/

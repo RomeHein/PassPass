@@ -1,0 +1,37 @@
+version: "3"
+services:
+  app:
+    image: passpass
+    restart: always
+    privileged: true
+    user: root
+    depends_on:
+      - postgres
+    environment:
+      db: production
+      dbSchema: passpass
+      dbUser: ppuser
+      dbUserPassword: PassPassIsAnOpenSourceProject4Prm
+      dbHost: postgres
+      dbPort: 5432
+      telegramToken: your:botTokenHere
+      autoMigrate: 1
+      TZ: Europe/Amsterdam
+    volumes:
+      - /sys:/sys
+      - /dev/mem:/dev/mem
+
+  postgres:
+    image: postgres:alpine
+    restart: always
+    ports:
+      - "35432:5432"
+    volumes:
+      - db:/var/lib/postgresql/data
+    environment:
+      POSTGRES_USER: ppuser
+      POSTGRES_PASSWORD: PassPassIsAnOpenSourceProject4Prm
+      POSTGRES_DB: production
+      POSTGRES_SCHEMA: passpass
+volumes:
+  db:
