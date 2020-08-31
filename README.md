@@ -1,7 +1,7 @@
 
-<div>
+<p align="center">
     <img src="storage/images/logo-large.png" width="400">
-</div>
+</p>
 
 ## What Do I do?
 
