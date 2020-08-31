@@ -20,7 +20,7 @@ Simple: You talk to [me](https://t.me/PassPassBot).
 At the moment you can choose between 4 different types of help:
 - Open a door
 - Grab an object
-- Make a course
+- Occasionaly run an errand
 - Be present in case of an emergency before specialists come.
 
 It's simple, no one is forced to anything. If an Helper wants to stop helping, he just tells me "/quit", and I'll notify you that "someone" has left you.

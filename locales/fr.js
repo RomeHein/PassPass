@@ -4,7 +4,7 @@ module.exports = {
         helper: `🤩 Vous avez eu la bonne idée de flasher un QR code PassPass de <%=scannedUser.telegramName%>. PassPass a été créé dans l’objectif d’aider les personnes à mobilité réduite pour leur faciliter ponctuellement le quotidien en les mettant en relation avec des personnes qui habitent à proximité de son domicile. <%=scannedUser.telegramName%> a collé ce sticker ici pour que vous vous y inscriviez ! 
         Bien entendu, plusieurs personnes peuvent s’inscrire au PassPass de <%=scannedUser.telegramName%>, c’est même le but ! 
         Dès qu’une personne répondra positivement à la demande de <%=scannedUser.telegramName%>, l’ensemble des autres personnes inscrites sur le PassPass de <%=scannedUser.telegramName%> sera prévenu`,
-        prm: `Bonjour et bienvenu! Je suis PassPassBot! Mon role est de faciliter votre vie en vous mettant en relation avec des personnes qui habitent à proximité de chez vous.`
+        prm: `Bonjour et bienvenue! Je suis PassPassBot! Mon role est de faciliter votre vie en vous mettant en relation avec des personnes qui habitent à proximité de chez vous. Pour interagir avec moi, il suffit de répondre à mes questions. Parfois je vous fais des propositions en bas de l'écran`
       },
       disclaimer: {
         helper: `⚠️ En aucun cas, l’objectif de PassPass est de se substituer aux auxiliaires et/ou aux aidants de la personne PMR.
@@ -28,12 +28,12 @@ module.exports = {
       addNewPrm: `🤩 Vous avez eu la bonne idée de flasher un QR code PassPass de <%=scannedUser.telegramName%>. Je vois que vous connaissez déjà le principe de PassPass. Je vais donc utiliser les préférences que vous avez déjà paramétrées.`,
     },
     signIn: {
-        neighborDensity: `PassPass se base fortement sur l'entreaide. Pour faciliter cela, il est nécessaire que vous vous trouviez au moins dans une ville ou village avec beaucoup de voisins à proximité directe de votre habitation.`,
+        neighborDensity: `PassPass se base fortement sur l'entraide. Pour faciliter cela, il est nécessaire que vous vous trouviez au moins dans une ville ou village avec beaucoup de voisins à proximité directe de votre habitation.`,
         notDenseNeighborhood: `😕 Je suis navré, mais PassPass fonctionne mieux avec une grande densité de personne autour de vous. Nous pouvons toujours continuer le processus, mais je ne suis pas certain de pouvoir être une grande aide!`,
-        mailAddress: `A présent j'aurais besoin de votre adresse physique. Cela pour deux raisons: 
-        - Lorsque quelqu'un scannera votre QRCode je serait en mesure de savoir si il n'est pas trop loin de chez vous
+        mailAddress: `À présent j'aurais besoin de votre adresse physique. Cela pour deux raisons: 
+        - Lorsque quelqu'un scannera votre QRCode je serai en mesure de savoir si il n'est pas trop loin de chez vous
         - Si vous souhaitez que je vous imprime votre sticker personnalisé avec votre QRCode, je pourrais l'envoyer directement chez vous
-        Il vous ait tout à fait possible de passer cette question ou de supprimer vos données plustard.
+        Il vous est tout à fait possible de passer cette question ou de supprimer vos données plus tard.
         `,
         accountCreation: `🤗 J'ai tout ce qu'il me faut pour créer votre compte. Ca devrait prendre quelques secondes...
         J'en profite pour vous dire que vous pouvez vous désinscrire à tout moment via la commande /quit. En faisant ainsi, je supprime immédiatement toutes vos informations de ma base de donnée. 
@@ -74,7 +74,7 @@ module.exports = {
         confirm: `Confirmez-vous l'adresse suivante:
         <%=user.mailAddress%>
         <%=user.city%> <%=user.country%>`,
-        country: `Dans quelle pays habitez vous?`,
+        country: `Dans quel pays habitez vous?`,
         city: `Dans quelle ville habitez vous?`,
         mail: `Quelle est votre adresse? Essayez d'être le plus complet possible avec le format suivant: 
         Civilité / Nom de Famille / Prenom
