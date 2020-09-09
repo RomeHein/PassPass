@@ -1,6 +1,0 @@
-/ansible
-/README
-.env
-.gitignore
-dockerfile
-docker-compose.yml

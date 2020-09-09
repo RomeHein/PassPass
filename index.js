@@ -15,7 +15,7 @@ const start = async (retried) => {
     console.log('✅ DB checked')
     if (process.env.telegramToken) {
       // Load telegram bot
-      require('./telegram')
+      require('./src')
       console.log('✅ Telegram Bot loaded')
     }
   } catch (err) {

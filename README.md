@@ -1,70 +1,62 @@
+This project was bootstrapped with
+[Bottender](https://github.com/Yoctol/bottender) init script.
 
-<p align="center">
-    <img src="storage/images/logo-large.png" width="400">
-</p>
+## Sending Feedback
 
-## What Do I do?
+Always feel free to open an issue to
+[Bottender](https://github.com/Yoctol/bottender/issues) repository.
 
-I'm a Telegram/Messenger Bot to assist PRM (Person with Reduced Mobility) in finding help in their neighborhood.
+## Configuration
 
-## How do I work?
+### The `bottender.config.js` File
 
-Simple: You talk to [me](https://t.me/PassPassBot).
+Bottender configuration file. You can use this file to provide settings for the session store and channels.
 
-1- I'll give you a QRCode to print (or I can send it to you) and to stick on somewhere visible by your neighborhood.
+### The `.env` File
 
-2- Someone scan your QRCode.
+Bottender utilizes the [dotenv](https://www.npmjs.com/package/dotenv) package to load your environment variables when developing your app.
 
-3- When you ask for help, I'll notify everyone who has scanned your QRCode that you need asistance.
+To make the bot work, you must put required environment variables into your `.env` file.
 
-At the moment you can choose between 4 different types of help:
-- Open a door
-- Grab an object
-- Occasionaly run an errand
-- Be present in case of an emergency before specialists come.
+## Available Scripts
 
-It's simple, no one is forced to anything. If an Helper wants to stop helping, he just tells me "/quit", and I'll notify you that "someone" has left you.
+In the project directory, you can run:
 
-## Bot Commands
+### `npm run dev`
 
-At the moment I'm only available on [Telegram](https://telegram.org/)
+Runs the app in development mode.<br>
+The bot will automatically reload if you make changes to the code.<br>
+By default, server runs on [http://localhost:5000](http://localhost:5000) and ngrok runs on [http://localhost:4040](http://localhost:4040).
 
-Telegram commands:
+To run in [Console Mode](https://bottender.js.org/docs/en/the-basics-console-mode), provide the `--console` option:
 
-tasks - Get your task list. From here you can trigger an alert to your helpers
+```sh
+npm run dev -- --console
+yarn dev --console
+```
 
-settasks - Set your tasks
+### `npm start`
 
-quit - Quit PassPass
+Runs the app in production mode.<br>
+By default, server runs on [http://localhost:5000](http://localhost:5000).
 
-qrcode - get your QRCode!
+To run in [Console Mode](https://bottender.js.org/docs/en/the-basics-console-mode), provide the `--console` option:
 
-info - get an extract of your data stored in PassPass database
+```sh
+npm start -- --console
+yarn start --console
+```
 
-help- get all commands available
+### `npm run lint`
 
-Messenger commands:
+Runs the linter rules using [Eslint](https://eslint.org/).
 
-In progress...
+### `npm test`
 
-## Installation
+Runs the test cases using [Jest](https://jestjs.io/).
 
-I'm already available on Telegram [here](https://t.me/PassPassBot), but you might want to run your own instance of PassPass.
+## Learn More
 
-- via Docker-compose
-You'll need two containers. One running the node.js script, and another one running the postgreSQL database.
-All this can be done at once by running the docker-compose.yml file given as an exemple. I strongly recommand you changing parameters (for instance the bot token).
-Run the docker-compose file with the command:
+To learn Bottender, check out the [Bottender documentation](https://bottender.js.org/docs/en/getting-started).
 
-```docker-compose up -d```
-
-- via Ansible
-First, you'll need Ansible installed on your computer. Then clone this repo on your machine, and simply cd to the ansible directory of the project:
-
-```cd /ansible```
-
-Then all you have to do is run the following command in your terminal:
-
-```ANSIBLE_HOST_KEY_CHECKING=false ansible-playbook passpass.yml -i raspberrypi.local, --user=pi --ask-pass -e "telegram_token=AAA:yourtelegramtoken"```
-
-This command will install all the necessary tools on your raspberry pi.
+For more examples, see [Bottender examples](https://github.com/Yoctol/bottender/tree/master/examples).
