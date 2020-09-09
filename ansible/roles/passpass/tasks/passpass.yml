@@ -3,7 +3,8 @@
   git: 
     repo: "https://github.com/RomeHein/PassPass.git"
     dest: /opt/PassPass
-
+    force: yes
+    
 - name: build the image
   command: docker build -t passpass /opt/PassPass
 
