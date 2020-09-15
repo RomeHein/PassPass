@@ -6,7 +6,7 @@ module.exports = {
         maxSize: 500,
       },
       file: {
-        dirname: '.sessions',
+        dirname: 'sessions',
       },
       redis: {
         port: 6379,
